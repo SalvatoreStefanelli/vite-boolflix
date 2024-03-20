@@ -11,6 +11,7 @@ export default {
             store,
             base_api_url: 'https://api.themoviedb.org/3/search/movie?api_key=32b11fa0e734b79e146cf88e806df1e4&language=it-IT&query=',
             base_api_url_tv: 'https://api.themoviedb.org/3/search/tv?api_key=32b11fa0e734b79e146cf88e806df1e4&language=it-IT&query=',
+            base_api_url_img: 'https://image.tmdb.org/t/p/w342',
             movies: [],
             series: [],
             error: false,
@@ -81,27 +82,24 @@ export default {
         </div>
 
         <div v-for="movie in movies.results" :key="movie.id + '_movie'">
-            {{ movie.title }},
-            {{ movie.original_title }},
+            <!-- {{ movie.title }},
+            {{ movie.original_title }}, -->
             {{ movie.original_language }},
-            {{ movie.vote_average }}
+            {{ movie.vote_average }},
+            <img :src="`${base_api_url_img}${movie.poster_path}`" alt="">
         </div>
 
         <div v-for="serie in series.results" :key="serie.id + '_serie'">
-            {{ serie.name }},
-            {{ serie.original_name }},
+            <!-- {{ serie.name }},
+            {{ serie.original_name }}, -->
             {{ serie.original_language }},
-            {{ serie.vote_average }}
+            {{ serie.vote_average }},
+            <img :src="`${base_api_url_img}${serie.poster_path}`" alt="">
         </div>
 
-
-
-
-        <div>
+        <!-- <div>
             {{ getResults }}
-        </div>
-
-
+        </div> -->
     </main>
 </template>
 
