@@ -1,0 +1,54 @@
+[1mdiff --git a/src/components/AppMain.vue b/src/components/AppMain.vue[m
+[1mindex 8246ca1..dbb1436 100644[m
+[1m--- a/src/components/AppMain.vue[m
+[1m+++ b/src/components/AppMain.vue[m
+[36m@@ -9,9 +9,6 @@[m [mexport default {[m
+     data() {[m
+         return {[m
+             store,[m
+[31m-            base_api_url: 'https://api.themoviedb.org/3/search/movie?api_key=32b11fa0e734b79e146cf88e806df1e4&language=it-IT&query=',[m
+[31m-            base_api_url_tv: 'https://api.themoviedb.org/3/search/tv?api_key=32b11fa0e734b79e146cf88e806df1e4&language=it-IT&query=',[m
+[31m-            base_api_url_img: 'https://image.tmdb.org/t/p/w342',[m
+             movies: [],[m
+             series: [],[m
+             error: false,[m
+[36m@@ -50,8 +47,8 @@[m [mexport default {[m
+         },[m
+ [m
+         filterResults() {[m
+[31m-            const url = `${this.base_api_url}${this.searchText}`[m
+[31m-            const url_tv = `${this.base_api_url_tv}${this.searchText}`[m
+[32m+[m[32m            const url = `${store.base_api_url}${this.searchText}`[m
+[32m+[m[32m            const url_tv = `${store.base_api_url_tv}${this.searchText}`[m
+             console.log(url);[m
+             console.log(url_tv);[m
+ [m
+[36m@@ -67,8 +64,8 @@[m [mexport default {[m
+         }[m
+     },[m
+     created() {[m
+[31m-        this.getMovies(this.base_api_url)[m
+[31m-        this.getSeries(this.base_api_url_tv)[m
+[32m+[m[32m        this.getMovies(store.base_api_url)[m
+[32m+[m[32m        this.getSeries(store.base_api_url_tv)[m
+     }[m
+ }[m
+ </script>[m
+[36m@@ -86,7 +83,7 @@[m [mexport default {[m
+             {{ movie.original_title }}, -->[m
+             {{ movie.original_language }},[m
+             {{ movie.vote_average }},[m
+[31m-            <img :src="`${base_api_url_img}${movie.poster_path}`" alt="">[m
+[32m+[m[32m            <img :src="`${store.base_api_url_img}${movie.poster_path}`" alt="">[m
+         </div>[m
+ [m
+         <div v-for="serie in series.results" :key="serie.id + '_serie'">[m
+[36m@@ -94,7 +91,7 @@[m [mexport default {[m
+             {{ serie.original_name }}, -->[m
+             {{ serie.original_language }},[m
+             {{ serie.vote_average }},[m
+[31m-            <img :src="`${base_api_url_img}${serie.poster_path}`" alt="">[m
+[32m+[m[32m            <img :src="`${store.base_api_url_img}${serie.poster_path}`" alt="">[m
+         </div>[m
+ [m
+         <!-- <div>[m

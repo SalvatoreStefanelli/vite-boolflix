@@ -9,9 +9,6 @@ export default {
     data() {
         return {
             store,
-            base_api_url: 'https://api.themoviedb.org/3/search/movie?api_key=32b11fa0e734b79e146cf88e806df1e4&language=it-IT&query=',
-            base_api_url_tv: 'https://api.themoviedb.org/3/search/tv?api_key=32b11fa0e734b79e146cf88e806df1e4&language=it-IT&query=',
-            base_api_url_img: 'https://image.tmdb.org/t/p/w342',
             movies: [],
             series: [],
             error: false,
@@ -20,6 +17,7 @@ export default {
     },
 
     methods: {
+
         getMovies(url) {
             // console.log(this.base_api_url);
             axios
@@ -50,8 +48,8 @@ export default {
         },
 
         filterResults() {
-            const url = `${this.base_api_url}${this.searchText}`
-            const url_tv = `${this.base_api_url_tv}${this.searchText}`
+            const url = `${store.base_api_url}${this.searchText}`
+            const url_tv = `${store.base_api_url_tv}${this.searchText}`
             console.log(url);
             console.log(url_tv);
 
@@ -67,41 +65,72 @@ export default {
         }
     },
     created() {
-        this.getMovies(this.base_api_url)
-        this.getSeries(this.base_api_url_tv)
+        this.getMovies(store.base_api_url)
+        this.getSeries(store.base_api_url_tv)
     }
+
 }
 </script>
 
 <template>
     <main>
 
-        <div class="filters">
-            <input type="text" placeholder="Type a movie or a series TV to search" v-model="searchText">
-            <button @click="filterResults">Search</button>
+        <div class="cards">
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <div class="filters">
+                            <input type="text" placeholder="Type a movie or a series TV to search" v-model="searchText">
+                            <button @click="filterResults">Search</button>
+                        </div>
+
+                        <div class="card" v-for="movie in movies.results" :key="movie.id + '_movie'">
+                            <img :src="`${store.base_api_url_img}${movie.poster_path}`" alt="">
+                            <div class="contain">
+                                {{ movie.title }},
+                                {{ movie.original_title }},
+                                {{ movie.original_language }},
+                                {{ movie.vote_average }}
+                                {{ movie.overview }}
+                            </div>
+                        </div>
+                        <div class="card" v-for="serie in series.results" :key="serie.id + '_serie'">
+                            <img :src="`${store.base_api_url_img}${serie.poster_path}`" alt="">
+                            <div class="contain">
+                                {{ serie.name }},
+                                {{ serie.original_name }},
+                                {{ serie.original_language }},
+                                {{ serie.vote_average }}
+                                {{ serie.overview }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div>
+                        {{ getResults }}
+                    </div> -->
+            </div>
         </div>
 
-        <div v-for="movie in movies.results" :key="movie.id + '_movie'">
-            <!-- {{ movie.title }},
-            {{ movie.original_title }}, -->
-            {{ movie.original_language }},
-            {{ movie.vote_average }},
-            <img :src="`${base_api_url_img}${movie.poster_path}`" alt="">
-        </div>
 
-        <div v-for="serie in series.results" :key="serie.id + '_serie'">
-            <!-- {{ serie.name }},
-            {{ serie.original_name }}, -->
-            {{ serie.original_language }},
-            {{ serie.vote_average }},
-            <img :src="`${base_api_url_img}${serie.poster_path}`" alt="">
-        </div>
 
-        <!-- <div>
-            {{ getResults }}
-        </div> -->
     </main>
 </template>
 
 
-<style scoped></style>
+<style scoped>
+.card .contain {
+    display: none;
+}
+
+
+.card img:hover {
+    display: none;
+
+    & .contain {
+        visibility: hidden;
+        background-color: var(--bf-dark);
+        color: var(--bf-light);
+    }
+}
+</style>
