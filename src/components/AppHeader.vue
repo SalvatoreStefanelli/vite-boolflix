@@ -11,6 +11,9 @@ export default {
             <div class="logo">
                 <h1>BOOLFLIX</h1>
             </div>
+
+
+
         </div>
 
     </header>

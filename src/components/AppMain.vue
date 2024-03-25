@@ -2,12 +2,14 @@
 
 import axios from 'axios';
 import { store } from '../store.js';
-import Card from './Card.vue';
+import FlagUsa from './FlagUsa.vue';
+import FlagIta from './FlagIta.vue';
 
 export default {
     name: 'AppMain',
     components: {
-        Card
+        FlagUsa,
+        FlagIta
     },
 
     data() {
@@ -59,12 +61,6 @@ export default {
 
             this.getMovies(url);
             this.getSeries(url_tv);
-        },
-
-        roundingResults() {
-            const vote = Math.floor(this.movie.vote_average)
-
-            this.roundingResults(vote);
         }
     },
 
@@ -84,13 +80,13 @@ export default {
 
 <template>
     <main>
+
         <div class="container">
             <div class="filters">
                 <input type="text" placeholder="Type a movie or a series TV to search" v-model="searchText">
                 <button @click="filterResults">Search</button>
             </div>
         </div>
-
 
         <div class="container">
             <div class="row">
@@ -99,9 +95,12 @@ export default {
                     <div class="contain">
                         <p><strong>Titolo:</strong> {{ movie.title }}</p>
                         <p><strong>Titolo originale:</strong> {{ movie.original_title }}</p>
-                        <p v-if="movie.original_language === 'en'"><strong>Lingua originale:</strong> <img
-                                src="../../ public / img / Flag_of_the_United_States_(DoS_ECA_Color_Standard).svg.png"
-                                alt=""></p>
+                        <p v-if="movie.original_language === 'en'"><strong>Lingua originale:</strong>
+                            <FlagUsa></FlagUsa>
+                        </p>
+                        <p v-else><strong>Lingua originale:</strong>
+                            <FlagIta></FlagIta>
+                        </p>
                         <p><strong>Voto:</strong> {{ movie.vote_average }}</p>
                         <p><strong>Overview:</strong> {{ movie.overview }}</p>
                     </div>
@@ -112,13 +111,19 @@ export default {
                     <div class="contain">
                         <p><strong>Titolo:</strong> {{ serie.name }}</p>
                         <p><strong>Titolo originale:</strong> {{ serie.original_name }}</p>
-                        <p><strong>Lingua originale:</strong> {{ serie.original_language }}</p>
+                        <p v-if="serie.original_language === 'en'"><strong>Lingua originale:</strong>
+                            <FlagUsa></FlagUsa>
+                        </p>
+                        <p v-else><strong>Lingua originale:</strong>
+                            <FlagIta></FlagIta>
+                        </p>
                         <p><strong>Voto:</strong> {{ serie.vote_average }}</p>
                         <p><strong>Overview:</strong> {{ serie.overview }}</p>
                     </div>
                 </div>
             </div>
         </div>
+
     </main>
 </template>
 
